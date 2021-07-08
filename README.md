@@ -1,4 +1,4 @@
-# randomuser
+# randomuser2
 
 ## Project setup
 ```
