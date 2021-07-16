@@ -1,19 +1,26 @@
 <template>
   <div class="p-d-flex p-jc-center">
     <h3>Random User Generator</h3>
-    <div class="p-mr-2">
-      <InputNumber id="horizontal" v-model="quantity" showButtons buttonLayout="horizontal"
-      decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary"
-      incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="1" 
+    <form @keydown.enter="fetchUsers">
+      <div class="p-mr-2">
+        <InputNumber id="horizontal" v-model="quantity" showButtons buttonLayout="horizontal"
+        decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary"
+        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="1" 
+        />
+        <Dropdown v-model="gender" 
+        :options="genders" 
+        optionLabel="name" 
+        optionValue="code" 
+        placeholder="Select gender"
+        />
+      </div>
+      <br />
+      <Button
+      label="Generate"
+      v-if="!loading"
+      @click.prevent="fetchUsers"
       />
-      <MultiSelect v-model="gender" :options="genders" optionLabel="name" placeholder="Select gender"/>
-    </div>
-    <br />
-    <Button
-    label="Generate"
-    v-if="!loading"
-    @click.prevent="fetchUsers(quantity, gender)"
-    />
+    </form>
   </div>
   <p v-if="loading"><ProgressSpinner style="width:70px;height:70px" 
     strokeWidth="8" animationDuration=".5s"/></p>
@@ -31,7 +38,7 @@ import Button from 'primevue/button';
 import InputNumber from 'primevue/inputnumber';
 import ProgressSpinner from 'primevue/progressspinner';
 import UserTable from '@/components/user-table.vue';
-import MultiSelect from 'primevue/multiselect';
+import Dropdown from 'primevue/dropdown';
 
 export default defineComponent({
   components: {
@@ -39,13 +46,14 @@ export default defineComponent({
     InputNumber,
     ProgressSpinner,
     UserTable,
-    MultiSelect,
+    Dropdown,
   },
 
   setup() {
-    const { getUser } = useApi();
+    const { call } = useApi();
 
     const genders = ref([
+      {name: 'Both', code: ''},
       {name: 'Male', code: 'male'},
       {name: 'Female', code: 'female'},
     ]);
@@ -55,17 +63,10 @@ export default defineComponent({
     const gender = ref();
     const users = ref();
 
-    async function fetchUsers(num: number, gen: string) {
-      loading.value = true;
-      error.value = false;
-      try {
-        users.value = await getUser(num, gen);
-      } catch {
-        error.value = true;
-      } finally {
-        loading.value = false;
-      }
+    function fetchUsers() {
+      call(error, loading, quantity.value, gender.value).then((data) => (users.value = data.results));
     }
+
     return { error, loading, fetchUsers, users, quantity, gender, genders };
   },
 });

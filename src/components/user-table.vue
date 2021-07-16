@@ -34,9 +34,6 @@
           {{ data.location.country }}
         </template>
       </Column>
-      <Column field="UserCard" header=" ">
-        <UserCard :users="users" />
-      </Column>
     </DataTable>
   </div>
 </template>
@@ -45,7 +42,6 @@
 import { defineComponent, ref } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import UserCard from '@/components/user-card.vue';
 import Chip from 'primevue/chip';
 import router from '@/router';
 import { RouterName } from '@/enum/route-name';
@@ -55,13 +51,15 @@ export default defineComponent({
   components: {
     DataTable,
     Column,
-    UserCard,
     Chip,
   },
   props: {
     users: {
       type: Object,
       required: true,
+      default() {
+        return null;
+      }
     },
   },
   setup() {
