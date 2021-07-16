@@ -15,5 +15,5 @@ export default function paginator() {
       });
     }
 
-    return { onPage, pageNumber, maxPage };
+    return { onPage };
 }

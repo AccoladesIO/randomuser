@@ -4,7 +4,7 @@
       :value='users'
       :paginator='true'
       :rows='6'
-      currentPageReportTemplate='{first} to {last} of {totalRecords}'
+      :autoLayout='true'
       paginatorTemplate='FirstPageLink PrevPageLink PageLinks 
       NextPageLink LastPageLink CurrentPageReport'
       responsiveLayout='scroll' @page='currentPage($event)'

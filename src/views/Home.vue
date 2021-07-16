@@ -22,10 +22,13 @@
   </div>
   <p v-if="loading"><ProgressSpinner style='width:70px;height:70px'
     strokeWidth='8' animationDuration='.5s'/></p>
-  <p v-if='error'>Cannot fetch users. Please try again</p>
+  <p v-if='error'>
+    <i class='pi-times-circle'></i>
+    Cannot fetch users. Please try again
+  </p>
   <br />
   <div v-if='users' class='p-d-flex p-jc-center'>
-    <UserTable :users='users' v-if='!loading' />
+    <UserTable :users='users' />
   </div>
 </template>
 
