@@ -3,7 +3,7 @@
     <h3>Random User Generator</h3>
       <div class='p-mr-2'>
         <InputNumber id='horizontal' v-model='quantity' showButtons buttonLayout='horizontal'
-        decrementButtonClass='p-button-secondary' incrementButtonClass='p-button-primary'
+        decrementButtonClass='p-button-secondary' incrementButtonClass='p-button-secondary'
         incrementButtonIcon='pi pi-plus' decrementButtonIcon='pi pi-minus' :min='1' 
         />
         <Dropdown v-model='gender' 
