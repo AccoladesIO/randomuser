@@ -1,44 +1,43 @@
 <template>
-  <div class="p-d-flex p-jc-center">
+  <div class='p-d-flex p-jc-center'>
     <h3>Random User Generator</h3>
-    <form @keydown.enter="fetchUsers">
-      <div class="p-mr-2">
-        <InputNumber id="horizontal" v-model="quantity" showButtons buttonLayout="horizontal"
-        decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary"
-        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="1" 
+      <div class='p-mr-2'>
+        <InputNumber id='horizontal' v-model='quantity' showButtons buttonLayout='horizontal'
+        decrementButtonClass='p-button-secondary' incrementButtonClass='p-button-primary'
+        incrementButtonIcon='pi pi-plus' decrementButtonIcon='pi pi-minus' :min='1' 
         />
-        <Dropdown v-model="gender" 
-        :options="genders" 
-        optionLabel="name" 
-        optionValue="code" 
-        placeholder="Select gender"
+        <Dropdown v-model='gender' 
+        :options='genders' 
+        optionLabel='name' 
+        optionValue='code' 
+        placeholder='Select gender'
         />
       </div>
       <br />
       <Button
-      label="Generate"
-      v-if="!loading"
-      @click.prevent="fetchUsers"
+      label='Generate'
+      v-if='!loading'
+      @click.prevent='generate'
       />
-    </form>
   </div>
-  <p v-if="loading"><ProgressSpinner style="width:70px;height:70px" 
-    strokeWidth="8" animationDuration=".5s"/></p>
-  <p v-if="error">Cannot fetch users. Please try again</p>
+  <p v-if="loading"><ProgressSpinner style='width:70px;height:70px'
+    strokeWidth='8' animationDuration='.5s'/></p>
+  <p v-if='error'>Cannot fetch users. Please try again</p>
   <br />
-  <div v-if="users" class="p-d-flex p-jc-center">
-    <UserTable :users="users" v-if="!loading" />
+  <div v-if='users' class='p-d-flex p-jc-center'>
+    <UserTable :users='users' v-if='!loading' />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import useApi from '@/composables/use-fetch';
+import { defineComponent } from 'vue';
 import Button from 'primevue/button';
 import InputNumber from 'primevue/inputnumber';
 import ProgressSpinner from 'primevue/progressspinner';
 import UserTable from '@/components/user-table.vue';
 import Dropdown from 'primevue/dropdown';
+import { genders } from '@/constants/genders';
+import getData from '@/composables/use-data';
 
 export default defineComponent({
   components: {
@@ -50,38 +49,19 @@ export default defineComponent({
   },
 
   setup() {
-    const { call } = useApi();
+    const { fetchUsers, loading, error,users, quantity, gender } = getData();
 
-    const genders = ref([
-      {name: 'Both', code: ''},
-      {name: 'Male', code: 'male'},
-      {name: 'Female', code: 'female'},
-    ]);
-    const error = ref(false);
-    const loading = ref(false);
-    const quantity = ref(1);
-    const gender = ref();
-    const users = ref();
-
-    function fetchUsers() {
-      call(error, loading, quantity.value, gender.value).then((data) => (users.value = data.results));
+    function generate() {
+      fetchUsers();
     }
 
-    return { error, loading, fetchUsers, users, quantity, gender, genders };
+    return { error, loading, generate, users, quantity, gender, genders };
   },
 });
 </script>
 
 <style scoped>
-.filters{
-  display: inline-grid;
-  margin: 2rem;
-}
 .p-button {
   margin-right: 0.5rem;
-}
-.select {
-  height: 40px;
-  border-radius: 5px;
 }
 </style>

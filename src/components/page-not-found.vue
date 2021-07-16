@@ -2,7 +2,7 @@
     <div>
         <h1>Error 404</h1>
         <h2>Page not found</h2>
-        <Button @click="goBack">Go back</Button>
+        <Button label='Go Back' class='p-button-text' @click="goBack" />
     </div>
 </template>
 
@@ -10,6 +10,7 @@
 import { defineComponent } from 'vue';
 import Button from 'primevue/button';
 import router from '@/router';
+import { RouterName } from '@/enum/route-name';
 
 export default defineComponent({
     name: 'PageNotFound',
@@ -18,7 +19,7 @@ export default defineComponent({
     },
     setup() {
         function goBack() {
-            router.go(-1);
+            router.push({ name: RouterName.Home });
         }
         return { goBack };
     },
