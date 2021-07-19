@@ -8,13 +8,13 @@ const routes: RouteRecordRaw[] = [
       component: () => import('@/views/home.vue'),
     },
     {
-      path: '/?page=:page',
+      path: '/users/page=:page',
       name: RouterName.List,
       component: () => import('@/views/home.vue'),
       props: true,
     },
     {
-      path: '/:pathMatch(.*)*',
+      path: '/:pathMatch(.*)',
       name: RouterName.PageNotFound,
       component: () => import('@/components/page-not-found.vue'),
     }

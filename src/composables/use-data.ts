@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 import useApi from './use-fetch';
 
-export default function getData() {
+export default function useData() {
     const { call } = useApi();
     const error = ref(false);
     const loading = ref(false);
     const quantity = ref(1);
-    const gender = ref();
+    const gender = ref('');
     const users = ref();
 
     function fetchUsers() {

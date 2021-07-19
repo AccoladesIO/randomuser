@@ -1,5 +1,7 @@
 import { Ref } from 'vue';
+import fetchApi from '@/service/fetch-api-service';
 
+const sendRequest = fetchApi();
 const url = `https://randomuser.me/api/?`;
 
 const searchParams = new URLSearchParams();
@@ -22,7 +24,7 @@ export default function useApi() {
     loading.value = true;
 
     try {
-      const result = await fetch(request);
+      const result = await sendRequest(request);
       return result.json();
     } catch {
       error.value = true;

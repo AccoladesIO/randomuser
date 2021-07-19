@@ -39,11 +39,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Chip from 'primevue/chip';
 import paginator from '@/composables/use-paginator';
+import IUsers from '@/interface/users';
 
 export default defineComponent({
   name: 'userTable',
@@ -54,17 +55,14 @@ export default defineComponent({
   },
   props: {
     users: {
-      type: Object,
+      type: Object as PropType<IUsers>,
       required: true,
-      default() {
-        return null;
-      }
     },
   },
   setup() {
     const { onPage } = paginator();
 
-    function currentPage(event: any) {
+    function currentPage(event: number) {
       onPage(event);
     }
     return { currentPage };

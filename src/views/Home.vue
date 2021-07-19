@@ -40,7 +40,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import UserTable from '@/components/user-table.vue';
 import Dropdown from 'primevue/dropdown';
 import { genders } from '@/constants/genders';
-import getData from '@/composables/use-data';
+import useData from '@/composables/use-data';
 
 export default defineComponent({
   components: {
@@ -52,7 +52,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { fetchUsers, loading, error,users, quantity, gender } = getData();
+    const { fetchUsers, loading, error, users, quantity, gender } = useData();
 
     function generate() {
       fetchUsers();
