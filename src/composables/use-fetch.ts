@@ -1,12 +1,13 @@
 import { Ref } from 'vue';
 import fetchApi from '@/service/fetch-api-service';
 
-const sendRequest = fetchApi();
 const url = `https://randomuser.me/api/?`;
 
 const searchParams = new URLSearchParams();
 
 export default function useApi() {
+  const sendRequest = fetchApi();
+
   async function call(error: Ref<boolean>, loading: Ref<boolean>, num: number, gen: string) {
     searchParams.set('results', num.toString());
     searchParams.set('gender', gen);

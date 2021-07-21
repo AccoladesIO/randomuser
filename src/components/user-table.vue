@@ -3,7 +3,7 @@
     <DataTable
       :value='users'
       :paginator='true'
-      :rows='6'
+      :rows='9'
       :autoLayout='true'
       paginatorTemplate='FirstPageLink PrevPageLink PageLinks 
       NextPageLink LastPageLink CurrentPageReport'
@@ -45,6 +45,7 @@ import Column from 'primevue/column';
 import Chip from 'primevue/chip';
 import paginator from '@/composables/use-paginator';
 import IUsers from '@/interface/users';
+import IPages from '@/interface/page';
 
 export default defineComponent({
   name: 'userTable',
@@ -62,7 +63,7 @@ export default defineComponent({
   setup() {
     const { onPage } = paginator();
 
-    function currentPage(event: number) {
+    function currentPage(event: IPages) {
       onPage(event);
     }
     return { currentPage };
@@ -84,5 +85,11 @@ img {
 }
 .p-chip.custom-chip-f {
     background: rgb(252, 230, 255);
+}
+.p-paginator {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 </style>

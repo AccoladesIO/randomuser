@@ -11,6 +11,7 @@
         optionLabel='name' 
         optionValue='code' 
         placeholder='Select gender'
+        @change='generate'
         />
       </div>
       <br />
@@ -20,10 +21,10 @@
       @click.prevent='generate'
       />
   </div>
-  <p v-if="loading"><ProgressSpinner style='width:70px;height:70px'
+  <p v-if="loading"><ProgressSpinner style='width:40px;height:40px'
     strokeWidth='8' animationDuration='.5s'/></p>
   <p v-if='error'>
-    <i class='pi-times-circle'></i>
+    <i class='pi pi-times-circle'></i>
     Cannot fetch users. Please try again
   </p>
   <br />
