@@ -1,18 +1,31 @@
 import { ref } from 'vue';
-import useApi from './use-fetch';
+import useAPI from './use-fetch';
 import { Result } from '@/interface/users';
 
 export default function useData() {
-    const { call } = useApi();
+    const { get } = useAPI();
     const error = ref(false);
     const loading = ref(false);
     const quantity = ref(1);
     const gender = ref('');
     const users = ref<Result[]>();
+    const searchParams = new URLSearchParams();
 
-    function fetchUsers() {
-      call(error, loading, quantity.value, gender.value).then((data) => (users.value = data.results));
+    async function fetchUsers() {
+      searchParams.set('results', quantity.value.toString());
+      searchParams.set('gender', gender.value);
+
+      error.value = false;
+      loading.value = true;
+
+      try {
+        await get(searchParams).then((data) => (users.value = data.results));
+      } catch {
+        error.value = true;
+      } finally {
+        loading.value = false;
+      }
     }
-
     return { error, loading, fetchUsers, users, quantity, gender }; 
+
 }

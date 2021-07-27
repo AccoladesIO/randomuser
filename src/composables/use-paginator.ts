@@ -3,7 +3,7 @@ import { RouterName } from '@/enum/route-name';
 import router from '@/router';
 import IPages from '@/interface/page';
 
-export default function paginator() {
+export default function usePaginator() {
     const pageNumber = ref(1);
     const maxPage = ref(1);
 
